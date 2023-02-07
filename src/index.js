@@ -12,12 +12,8 @@ function Comment(props) {
   return (
     <div className="Comment">
       <UserInfo user={props.author}/>
-      <div className="Comment-text">
-        {props.text}
-      </div>
-      <div className="Comment-date">
-        {formatDate(props.date)}
-      </div>
+      <CommentText string={props.text} />
+      <CommentDate date={props.date}/>
     </div>
   );
 }
@@ -41,6 +37,22 @@ function Avatar(props) {
       alt={props.user.name}
     />
   );
+}
+
+function CommentText(props) {
+  return (
+    <div className="Comment-text">
+      {props.string}
+    </div>
+  )
+}
+
+function CommentDate(props) {
+  return (
+    <div className="Comment-date">
+        {formatDate(props.date)}
+    </div>
+  )
 }
 
 const comment = {
