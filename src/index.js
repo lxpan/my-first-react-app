@@ -5,11 +5,13 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 
 class Clock extends React.Component {
+  // 1.
   constructor(props) {
     super(props);
     this.state = {date: new Date()};
   }
 
+  // 3.
   componentDidMount() {
     // add additional class field independent of "this.props" or "this.state"
     this.timerID = setInterval(
@@ -18,16 +20,20 @@ class Clock extends React.Component {
     );
   }
 
+  // 5. Called if Clock is ever removed from DOM
   componentWillUnmount() {
     clearInterval(this.timerID);
   }
 
+  // 4. On Repeat
   tick() {
+    // when state changes, React knows to call render() again
     this.setState({
       date: new Date()
     });
   }
 
+  // 2. 
   render() {
     return (
       <div>
