@@ -4,12 +4,28 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
-
 class Clock extends React.Component {
   constructor(props) {
     super(props);
     this.state = {date: new Date()};
+  }
+
+  componentDidMount() {
+    // add additional class field independent of "this.props" or "this.state"
+    this.timerID = setInterval(
+      () => this.tick(),
+      1000
+    );
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.timerID);
+  }
+
+  tick() {
+    this.setState({
+      date: new Date()
+    });
   }
 
   render() {
@@ -22,13 +38,8 @@ class Clock extends React.Component {
   }
 }
 
-function tick() {
-  root.render(
-    <Clock />
-  );
-}
-
-setInterval(tick, 1000);
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(<Clock />);
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))
