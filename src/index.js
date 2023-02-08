@@ -1,36 +1,29 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
-
-const people = [{
-  id: 0,
-  name: 'Creola Katherine Johnson',
-  profession: 'mathematician',
-}, {
-  id: 1,
-  name: 'Mario José Molina-Pasquel Henríquez',
-  profession: 'chemist',
-}, {
-  id: 2,
-  name: 'Mohammad Abdus Salam',
-  profession: 'physicist',
-}, {
-  name: 'Percy Lavon Julian',
-  profession: 'chemist',  
-}, {
-  name: 'Subrahmanyan Chandrasekhar',
-  profession: 'astrophysicist',
-}];
+import React from "react";
+import ReactDOM from "react-dom/client";
+import "./index.css";
+import reportWebVitals from "./reportWebVitals";
+import { people } from './data.js';
+import { getImageUrl } from './utils.js';
 
 function List() {
-  const listItems = people.map(person => <li>{person.name}</li>);
+  const chemists = people.filter((person) => person.profession === "chemist");
+  const listItems = chemists.map((person) => 
+    <li>
+      <img
+        src={getImageUrl(person)}
+        alt={person.name}
+      />
+      <p>
+        <b>{person.name}:</b>
+        {' ' + person.profession + ' '}
+        known for {person.accomplishment}
+      </p>
+    </li>
+  );
   return <ul>{listItems}</ul>;
 }
 
-
-const root = ReactDOM.createRoot(document.getElementById('root'));
+const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(<List />);
 
 // If you want to start measuring performance in your app, pass a function
