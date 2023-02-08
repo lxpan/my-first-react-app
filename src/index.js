@@ -6,8 +6,9 @@ import { people } from './data.js';
 import { getImageUrl } from './utils.js';
 
 function List() {
-  const chemists = people.filter((person) => person.profession === "chemist");
-  const listItems = chemists.map((person) => 
+  // const selected = people.filter((person) => person.profession === "chemist");
+  const selected = people;
+  const listItems = selected.map((person) => 
     <li key={person.id}>
       <img
         src={getImageUrl(person)}
