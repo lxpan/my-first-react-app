@@ -1,7 +1,10 @@
 import React from 'react';
 
+const ErrorComponent = () => <div>{props.ignore}</div>;
+
 /* eslint-disable class-methods-use-this */
 /* eslint-disable react/prop-types */
+/* eslint-disable no-unused-vars */
 
 export default class Counter extends React.Component {
     constructor(props) {
@@ -40,6 +43,7 @@ export default class Counter extends React.Component {
     shouldComponentUpdate(nextProps, nextState) {
         if (nextProps.ignoreProp && this.props.ignoreProp !== nextProps.ignoreProp) {
             console.log('Should Component Update - DO NOT RENDER');
+            console.log('----------------------');
             return false;
         }
         console.log('Sould Component Update - RENDER');
@@ -55,14 +59,32 @@ export default class Counter extends React.Component {
         console.log('---------------------');
     }
 
+    // Capture props not stored in state, before re-rendering that component
+    getSnapshotBeforeUpdate(prevProps, prevState) {
+        console.log('Get Snapshot Before Update');
+        // the return here gets passed to componentDidUpdate via the param "snapshot"
+        return null;
+    }
+
+    // allow handling of errors so that the page can still load
+    componentDidCatch(error, info) {
+        console.log('Component Did Catch');
+        this.setState({ error, info });
+    }
+
     render() {
         console.log('Render');
+
+        if (this.props.showErrorComponent && this.state.error) {
+            return <div>We have encountered an error! {this.state.error.message}</div>;
+        }
 
         return (
             <>
                 <button onClick={this.increment}>Increment</button>
                 <button onClick={this.decrement}>Decrement</button>
                 <div className="counter">Counter: {this.state.counter}</div>
+                {this.props.showErrorComponent ? <ErrorComponent /> : null}
             </>
         );
     }
