@@ -66,6 +66,8 @@ export default class Counter extends React.Component {
     }
 
     // Capture props not stored in state, before re-rendering that component
+    // Use case: load positions of list views or text areas
+    // which can be passed to componentDidUpdate
     getSnapshotBeforeUpdate(prevProps, prevState) {
         console.log('Get Snapshot Before Update');
         // the return here gets passed to componentDidUpdate via the param "snapshot"
