@@ -1,5 +1,8 @@
 import React from 'react';
 
+/* eslint-disable class-methods-use-this */
+/* eslint-disable react/prop-types */
+
 export default class Counter extends React.Component {
     constructor(props) {
         console.log('Constructor');
@@ -13,12 +16,27 @@ export default class Counter extends React.Component {
         this.decrement = () => this.setState({ counter: this.state.counter - 1 });
     }
 
+    // Purpose: copy over selected props over to state
+    static getDerivedStateFromProps(props, state) {
+        // static method also means no access to 'this'
+        if (props.seed && state.seed !== props.seed) {
+            return {
+                seed: props.seed,
+                // prop seed copied over to counter
+                counter: props.seed,
+            };
+        }
+        // anything returned here gets assigned to state
+        return null;
+    }
+
     componentDidMount() {
         console.log('Component Did Mount');
         console.log('-------------------');
     }
 
-    // this is used to stop a re-render in certain situations when a state/prop change doesn't need to update UI
+    // this is used to stop a re-render in certain situations when a state/prop
+    // change doesn't need to update UI
     shouldComponentUpdate(nextProps, nextState) {
         if (nextProps.ignoreProp && this.props.ignoreProp !== nextProps.ignoreProp) {
             console.log('Should Component Update - DO NOT RENDER');
