@@ -13,6 +13,8 @@ export default class Counter extends React.Component {
 
         this.state = {
             counter: 0,
+            seed: 0,
+            initialising: true,
         };
 
         this.increment = () => this.setState({ counter: this.state.counter + 1 });
@@ -33,8 +35,12 @@ export default class Counter extends React.Component {
         return null;
     }
 
+    // Good for showing loading "spinners" while loading content
     componentDidMount() {
         console.log('Component Did Mount');
+        setTimeout(() => {
+            this.setState({ initialising: false });
+        }, 500);
         console.log('-------------------');
     }
 
@@ -74,6 +80,10 @@ export default class Counter extends React.Component {
 
     render() {
         console.log('Render');
+
+        if (this.state.initialising) {
+            return <div>Initialising...</div>;
+        }
 
         if (this.props.showErrorComponent && this.state.error) {
             return <div>We have encountered an error! {this.state.error.message}</div>;
