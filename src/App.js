@@ -11,6 +11,15 @@ export default class App extends React.Component {
 
         this.mountCounter = () => this.setState({ mount: true });
         this.unmountCounter = () => this.setState({ mount: false });
+        this.state = {
+            mount: true,
+            ignoreProp: 0,
+        };
+
+        this.mountCounter = () => this.setState({ mount: true });
+        this.unmountCounter = () => this.setState({ mount: false });
+
+        this.ignoreProp = () => this.setState({ ignoreProp: Math.random() });
     }
 
     render() {
@@ -22,7 +31,8 @@ export default class App extends React.Component {
                 <button onClick={this.unmountCounter} disabled={!this.state.mount}>
                     Unmount Counter
                 </button>
-                {this.state.mount ? <Counter /> : null}
+                <button onClick={this.ignoreProp}>Ignore Prop</button>
+                {this.state.mount ? <Counter ignoreProp={this.state.ignoreProp} /> : null}
             </div>
         );
     }
